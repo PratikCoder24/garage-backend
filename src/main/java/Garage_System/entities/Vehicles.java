@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Table(name = "vehicle")
 @Getter
@@ -38,4 +40,7 @@ public class Vehicles {
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
+
+    @OneToMany(mappedBy = "vehicle",fetch = FetchType.LAZY)
+    private List<JobCard> jobCardList;
 }
