@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Table(name = "service_catalogue")
 @Getter
@@ -23,4 +25,7 @@ public class ServiceCatalogue {
 
     @Column(name = "service_charge",nullable = false)
     private int serviceCharge;
+
+    @OneToMany(mappedBy = "serviceCatalogue",fetch = FetchType.LAZY)
+    private List<JobCardServiceItem> jobCardServiceItems;
 }

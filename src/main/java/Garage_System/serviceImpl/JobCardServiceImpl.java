@@ -2,13 +2,17 @@ package Garage_System.serviceImpl;
 
 import Garage_System.DTO.RequestDTO.JobCardRequestDTO;
 import Garage_System.DTO.RequestDTO.JobCardStatusUpdateRequestDTO;
+import Garage_System.DTO.ResponseDTO.JobCardDetailResponseDTO;
 import Garage_System.DTO.ResponseDTO.JobCardResponseDTO;
 import Garage_System.Enum.Status;
 import Garage_System.entities.JobCard;
+import Garage_System.entities.JobCardServiceItem;
 import Garage_System.entities.Vehicles;
 import Garage_System.exception.ResourceNotFoundException;
+import Garage_System.mapper.JobCardDetailMapper;
 import Garage_System.mapper.JobCardMapper;
 import Garage_System.repository.JobCardRepository;
+import Garage_System.repository.JobCardServiceItemRepository;
 import Garage_System.repository.VehicleRepository;
 import Garage_System.service.JobCardService;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +27,7 @@ import java.util.stream.Collectors;
 public class JobCardServiceImpl implements JobCardService {
     private final JobCardRepository jobCardRepository;
     private final VehicleRepository vehicleRepository;
+    private final JobCardServiceItemRepository jobCardServiceItemRepository;
 
     @Override
     public List<JobCardResponseDTO> getAllJobCards() {
@@ -63,10 +68,13 @@ public class JobCardServiceImpl implements JobCardService {
     }
 
     @Override
-    public JobCardResponseDTO getJobCardById(Long id) {
+    public JobCardDetailResponseDTO getJobCardById(Long id) {
         JobCard jobCard = jobCardRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("JobCard not Found!"));
-        return JobCardMapper.mapToDTO(jobCard);
+
+        List<JobCardServiceItem> serviceItems = jobCardServiceItemRepository.findByJobCardId(id);
+        double estimate = jobCardServiceItemRepository.sumLabourFeeByJobCardId(id);
+        return JobCardDetailMapper.mapToDTO(jobCard,serviceItems,estimate);
     }
 
     @Override

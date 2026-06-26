@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "job_card")
@@ -34,6 +35,9 @@ public class JobCard {
     @ManyToOne
     @JoinColumn(name = "vehicle_id")
     private Vehicles vehicle;
+
+    @OneToMany(mappedBy = "jobCard",fetch = FetchType.LAZY)
+    private List<JobCardServiceItem> jobCardServiceItemList;
 
 }
 
