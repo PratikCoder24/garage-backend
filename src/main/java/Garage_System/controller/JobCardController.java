@@ -1,12 +1,11 @@
 package Garage_System.controller;
 
-import Garage_System.DTO.RequestDTO.AddServiceToJobCardRequestDTO;
-import Garage_System.DTO.RequestDTO.JobCardRequestDTO;
-import Garage_System.DTO.RequestDTO.JobCardStatusUpdateRequestDTO;
-import Garage_System.DTO.RequestDTO.UpdateLabourFeeRequestDTO;
+import Garage_System.DTO.RequestDTO.*;
 import Garage_System.DTO.ResponseDTO.JobCardDetailResponseDTO;
+import Garage_System.DTO.ResponseDTO.JobCardPartsItemResponseDTO;
 import Garage_System.DTO.ResponseDTO.JobCardResponseDTO;
 import Garage_System.DTO.ResponseDTO.JobCardServiceItemResponseDTO;
+import Garage_System.service.JobCardPartsItemService;
 import Garage_System.service.JobCardService;
 import Garage_System.service.JobCardServiceItemService;
 import jakarta.validation.Valid;
@@ -24,6 +23,7 @@ public class JobCardController {
 
     private final JobCardService jobCardService;
     private final JobCardServiceItemService jobCardServiceItemService;
+    private final JobCardPartsItemService jobCardPartsItemService;
 
     @GetMapping("/all")
     public ResponseEntity<List<JobCardResponseDTO>> getAllJobCards(){
@@ -95,5 +95,40 @@ public class JobCardController {
     @GetMapping("/{jobCardId}/estimate")
     public ResponseEntity<Double> getEstimate(@PathVariable Long jobCardId){
         return ResponseEntity.ok(jobCardServiceItemService.getEstimate(jobCardId));
+    }
+
+    @GetMapping("/{jobCardId}/parts")
+    public ResponseEntity<List<JobCardPartsItemResponseDTO>> getAllParts(@PathVariable Long jobCardId){
+     return ResponseEntity.ok(jobCardPartsItemService.getPartsForJobCard(jobCardId));
+    }
+
+    @PostMapping("/{jobCardId}/parts")
+    public ResponseEntity<JobCardPartsItemResponseDTO> addPartToJobCard(
+            @PathVariable Long jobCardId,
+            @Valid @RequestBody AddPartsToJobCardRequestDTO request
+            ){
+        JobCardPartsItemResponseDTO response = jobCardPartsItemService.addPartsToJobCard(jobCardId,request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @PatchMapping("/parts/{itemId}")
+    public ResponseEntity<JobCardPartsItemResponseDTO> updatePriceUsed(
+            @PathVariable Long itemId,
+            @Valid @RequestBody UpdatePriceUsedRequestDTO request
+    ){
+        JobCardPartsItemResponseDTO response = jobCardPartsItemService.updatePriceUsed(itemId,request);
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/parts/{itemId}")
+    public ResponseEntity<Void> removePartsFromJobCard(@PathVariable Long itemId){
+        jobCardPartsItemService.removePartsFromJobCard(itemId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{jobCardId}/parts-total")
+    public ResponseEntity<Double> getPartsTotal(@PathVariable Long jobCardId){
+        double response = jobCardPartsItemService.getPartsTotal(jobCardId);
+        return ResponseEntity.ok(response);
     }
 }

@@ -6,11 +6,13 @@ import Garage_System.DTO.ResponseDTO.JobCardDetailResponseDTO;
 import Garage_System.DTO.ResponseDTO.JobCardResponseDTO;
 import Garage_System.Enum.Status;
 import Garage_System.entities.JobCard;
+import Garage_System.entities.JobCardPartsItem;
 import Garage_System.entities.JobCardServiceItem;
 import Garage_System.entities.Vehicles;
 import Garage_System.exception.ResourceNotFoundException;
 import Garage_System.mapper.JobCardDetailMapper;
 import Garage_System.mapper.JobCardMapper;
+import Garage_System.repository.JobCardPartsItemRepository;
 import Garage_System.repository.JobCardRepository;
 import Garage_System.repository.JobCardServiceItemRepository;
 import Garage_System.repository.VehicleRepository;
@@ -28,6 +30,7 @@ public class JobCardServiceImpl implements JobCardService {
     private final JobCardRepository jobCardRepository;
     private final VehicleRepository vehicleRepository;
     private final JobCardServiceItemRepository jobCardServiceItemRepository;
+    private final JobCardPartsItemRepository jobCardPartsItemRepository;
 
     @Override
     public List<JobCardResponseDTO> getAllJobCards() {
@@ -74,7 +77,10 @@ public class JobCardServiceImpl implements JobCardService {
 
         List<JobCardServiceItem> serviceItems = jobCardServiceItemRepository.findByJobCardId(id);
         double estimate = jobCardServiceItemRepository.sumLabourFeeByJobCardId(id);
-        return JobCardDetailMapper.mapToDTO(jobCard,serviceItems,estimate);
+
+        List<JobCardPartsItem> partItems = jobCardPartsItemRepository.findByJobCardId(id);
+        double partsTotal = jobCardPartsItemRepository.sumPriceUsedByJobCardId(id);
+        return JobCardDetailMapper.mapToDTO(jobCard,serviceItems,estimate,partItems,partsTotal);
     }
 
     @Override

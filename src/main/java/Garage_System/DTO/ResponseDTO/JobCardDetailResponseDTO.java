@@ -22,7 +22,7 @@ public class JobCardDetailResponseDTO {
     private String conditionNotes;
 
     @JsonFormat(pattern = "dd-MM-yyyy")
-    private String deliveryDate;
+    private LocalDate deliveryDate;
 
     private String status;
 
@@ -30,4 +30,7 @@ public class JobCardDetailResponseDTO {
 
     private List<JobCardServiceItemResponseDTO> services;
     private double estimate;
+
+    private List<JobCardPartsItemResponseDTO> parts;
+    private double partsTotal;
 }

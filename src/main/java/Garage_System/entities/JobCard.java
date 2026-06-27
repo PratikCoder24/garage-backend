@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -38,6 +37,9 @@ public class JobCard {
 
     @OneToMany(mappedBy = "jobCard",fetch = FetchType.LAZY)
     private List<JobCardServiceItem> jobCardServiceItemList;
+
+    @OneToMany(mappedBy = "jobCard",fetch = FetchType.LAZY)
+    private List<JobCardPartsItem> jobCardPartsItemsList;
 
 }
 
