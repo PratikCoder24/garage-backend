@@ -41,6 +41,19 @@ public class GlobalExceptionHandler {
         );
     }
 
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponseDTO> handleInvalidJobCardStateException(InvalidJobCardStateException ex){
+        return new ResponseEntity<>(
+                new ErrorResponseDTO(
+                        LocalDateTime.now().toString(),
+                        HttpStatus.CONFLICT.value(),
+                        "Conflict",
+                        ex.getMessage()
+                ),
+                HttpStatus.CONFLICT
+        );
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String,String>> handleValidationException(MethodArgumentNotValidException ex){
         Map<String,String> errors = new HashMap<>();
@@ -59,6 +72,7 @@ public class GlobalExceptionHandler {
                 HttpStatus.BAD_REQUEST
         );
     }
+
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ErrorResponseDTO> handleInvalidJSON(HttpMessageNotReadableException ex){
