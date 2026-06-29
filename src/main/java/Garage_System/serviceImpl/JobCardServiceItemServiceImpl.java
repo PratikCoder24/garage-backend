@@ -6,8 +6,10 @@ import Garage_System.DTO.ResponseDTO.JobCardServiceItemResponseDTO;
 import Garage_System.entities.JobCard;
 import Garage_System.entities.JobCardServiceItem;
 import Garage_System.entities.ServiceCatalogue;
+import Garage_System.exception.InvalidJobCardStateException;
 import Garage_System.exception.ResourceNotFoundException;
 import Garage_System.mapper.JobCardServiceItemMapper;
+import Garage_System.repository.InvoiceRepository;
 import Garage_System.repository.JobCardRepository;
 import Garage_System.repository.JobCardServiceItemRepository;
 import Garage_System.repository.ServiceCatalogueRepository;
@@ -25,6 +27,7 @@ public class JobCardServiceItemServiceImpl implements JobCardServiceItemService 
     private final JobCardServiceItemRepository jobCardServiceItemRepository;
     private final JobCardRepository jobCardRepository;
     private final ServiceCatalogueRepository serviceRepository;
+    private final InvoiceRepository invoiceRepository;
 
     @Override
     public List<JobCardServiceItemResponseDTO> getServiceForJobCard(Long jobCardId) {
@@ -42,7 +45,9 @@ public class JobCardServiceItemServiceImpl implements JobCardServiceItemService 
                 .orElseThrow(() -> new ResourceNotFoundException("JobCard not Found!"));
         ServiceCatalogue service = serviceRepository.findById(request.getServiceId())
                 .orElseThrow(() -> new ResourceNotFoundException("Service not Found!"));
-
+        if(invoiceRepository.existsByJobCardId(jobCardId)){
+            throw new InvalidJobCardStateException("Cannot modify a job card that has already been invoiced");
+        }
         JobCardServiceItem items = new JobCardServiceItem();
         items.setJobCard(jobCard);
         items.setServiceCatalogue(service);
@@ -56,6 +61,9 @@ public class JobCardServiceItemServiceImpl implements JobCardServiceItemService 
     public JobCardServiceItemResponseDTO updateLabourFee(Long itemId, UpdateLabourFeeRequestDTO request) {
         JobCardServiceItem items = jobCardServiceItemRepository.findById(itemId)
                 .orElseThrow(() -> new ResourceNotFoundException("Job card service item not Found"));
+        if(invoiceRepository.existsByJobCardId(items.getJobCard().getId())){
+            throw new InvalidJobCardStateException("Cannot modify a job card that has already been invoiced");
+        }
         items.setLabourFee(request.getLabourFee());
         JobCardServiceItem updated = jobCardServiceItemRepository.save(items);
         return JobCardServiceItemMapper.mapToDTO(updated);
@@ -65,6 +73,9 @@ public class JobCardServiceItemServiceImpl implements JobCardServiceItemService 
     public void removeService(Long itemId) {
         JobCardServiceItem item = jobCardServiceItemRepository.findById(itemId)
                 .orElseThrow(() -> new ResourceNotFoundException("Job card service item not Found"));
+        if(invoiceRepository.existsByJobCardId(item.getJobCard().getId())){
+            throw new InvalidJobCardStateException("Cannot modify a job card that has already been invoiced");
+        }
         jobCardServiceItemRepository.delete(item);
     }
 

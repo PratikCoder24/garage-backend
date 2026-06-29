@@ -9,13 +9,11 @@ import Garage_System.entities.JobCard;
 import Garage_System.entities.JobCardPartsItem;
 import Garage_System.entities.JobCardServiceItem;
 import Garage_System.entities.Vehicles;
+import Garage_System.exception.InvalidJobCardStateException;
 import Garage_System.exception.ResourceNotFoundException;
 import Garage_System.mapper.JobCardDetailMapper;
 import Garage_System.mapper.JobCardMapper;
-import Garage_System.repository.JobCardPartsItemRepository;
-import Garage_System.repository.JobCardRepository;
-import Garage_System.repository.JobCardServiceItemRepository;
-import Garage_System.repository.VehicleRepository;
+import Garage_System.repository.*;
 import Garage_System.service.JobCardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,6 +29,7 @@ public class JobCardServiceImpl implements JobCardService {
     private final VehicleRepository vehicleRepository;
     private final JobCardServiceItemRepository jobCardServiceItemRepository;
     private final JobCardPartsItemRepository jobCardPartsItemRepository;
+    private final InvoiceRepository invoiceRepository;
 
     @Override
     public List<JobCardResponseDTO> getAllJobCards() {
@@ -62,6 +61,9 @@ public class JobCardServiceImpl implements JobCardService {
                 .orElseThrow(() -> new ResourceNotFoundException("JobCard not Found!"));
         Vehicles vehicle = vehicleRepository.findById(request.getVehicleId())
                 .orElseThrow(() -> new ResourceNotFoundException("Vehicle not Found!"));
+        if(invoiceRepository.existsByJobCardId(id)){
+            throw new InvalidJobCardStateException("Cannot modify a job card that has already been invoiced");
+        }
 
         jobCard.setVehicle(vehicle);
         jobCard.setConditionNotes(request.getCondition());

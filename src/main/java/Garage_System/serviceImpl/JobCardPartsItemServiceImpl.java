@@ -6,8 +6,10 @@ import Garage_System.DTO.ResponseDTO.JobCardPartsItemResponseDTO;
 import Garage_System.entities.JobCard;
 import Garage_System.entities.JobCardPartsItem;
 import Garage_System.entities.PartsCatalogue;
+import Garage_System.exception.InvalidJobCardStateException;
 import Garage_System.exception.ResourceNotFoundException;
 import Garage_System.mapper.JobCardPartsItemMapper;
+import Garage_System.repository.InvoiceRepository;
 import Garage_System.repository.JobCardPartsItemRepository;
 import Garage_System.repository.JobCardRepository;
 import Garage_System.repository.PartsCatalogueRepository;
@@ -24,6 +26,7 @@ public class JobCardPartsItemServiceImpl implements JobCardPartsItemService {
     private final JobCardPartsItemRepository jobCardPartsItemRepository;
     private final JobCardRepository jobCardRepository;
     private final PartsCatalogueRepository partsRepository;
+    private final InvoiceRepository invoiceRepository;
 
 
     @Override
@@ -42,6 +45,9 @@ public class JobCardPartsItemServiceImpl implements JobCardPartsItemService {
                 .orElseThrow(() -> new ResourceNotFoundException("Job card not Found"));
         PartsCatalogue parts = partsRepository.findById(request.getPartId())
                 .orElseThrow(() -> new ResourceNotFoundException("Parts not Found!"));
+        if(invoiceRepository.existsByJobCardId(jobCardId)){
+            throw new InvalidJobCardStateException("Cannot modify a job card that has already been invoiced");
+        }
         JobCardPartsItem items = new JobCardPartsItem();
         items.setJobCard(jobCard);
         items.setParts(parts);
@@ -56,6 +62,9 @@ public class JobCardPartsItemServiceImpl implements JobCardPartsItemService {
     public JobCardPartsItemResponseDTO updatePriceUsed(Long itemId, UpdatePriceUsedRequestDTO request) {
         JobCardPartsItem items = jobCardPartsItemRepository.findById(itemId)
                 .orElseThrow(() -> new ResourceNotFoundException("Job card parts item not Found!"));
+        if(invoiceRepository.existsByJobCardId(items.getJobCard().getId())){
+            throw new InvalidJobCardStateException("Cannot modify a job card that has already been invoiced");
+        }
         items.setPriceUsed(request.getPriceUsed());
         JobCardPartsItem updatedItems = jobCardPartsItemRepository.save(items);
         return JobCardPartsItemMapper.mapToDTO(updatedItems);
@@ -65,6 +74,9 @@ public class JobCardPartsItemServiceImpl implements JobCardPartsItemService {
     public void removePartsFromJobCard(Long itemId) {
         JobCardPartsItem item = jobCardPartsItemRepository.findById(itemId)
                 .orElseThrow(() -> new ResourceNotFoundException("Job card parts item not Found!"));
+        if(invoiceRepository.existsByJobCardId(item.getJobCard().getId())){
+            throw new InvalidJobCardStateException("Cannot modify a job card that has already been invoiced");
+        }
         jobCardPartsItemRepository.delete(item);
     }
 
