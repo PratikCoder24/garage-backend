@@ -24,6 +24,13 @@ public class CustomerController {
         return ResponseEntity.ok(responseDTO);
     }
 
+    @GetMapping("/phone")
+    public ResponseEntity<CustomerResponseDTO> getCustomerByPhone(
+            @RequestParam String phone
+    ){
+        return ResponseEntity.ok(customerService.getCustomerByPhone(phone));
+    }
+
     @PostMapping("/add")
     public ResponseEntity<CustomerResponseDTO> addCustomer(
             @Valid @RequestBody CustomerRequestDTO request
