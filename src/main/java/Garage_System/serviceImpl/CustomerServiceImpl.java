@@ -53,11 +53,10 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerResponseDTO getCustomerByPhone(String phone) {
-        Customer customer = customerRepository.findByPhone(phone)
-                .orElseThrow(() -> new ResourceNotFoundException("Customer not found!"));
-        return CustomerMapper.mapToDTO(customer);
+    public boolean getCustomerByPhone(String phone) {
+        return customerRepository.existsByPhone(phone);
     }
+
 
     @Override
     public void deleteCustomer(Long id) {

@@ -25,7 +25,7 @@ public class CustomerController {
     }
 
     @GetMapping("/phone")
-    public ResponseEntity<CustomerResponseDTO> getCustomerByPhone(
+    public ResponseEntity<Boolean> getCustomerByPhone(
             @RequestParam String phone
     ){
         return ResponseEntity.ok(customerService.getCustomerByPhone(phone));
