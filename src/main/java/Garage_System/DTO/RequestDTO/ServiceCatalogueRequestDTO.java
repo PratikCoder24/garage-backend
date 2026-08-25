@@ -2,7 +2,7 @@ package Garage_System.DTO.RequestDTO;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,6 +17,6 @@ public class ServiceCatalogueRequestDTO {
     private String serviceName;
 
     @NotNull(message = "service charge is required")
-    @Positive(message = "service charge must be positive")
+    @PositiveOrZero(message = "service charge must be positive")
     private Integer serviceCharge;
 }
