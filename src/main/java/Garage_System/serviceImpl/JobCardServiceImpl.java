@@ -89,6 +89,12 @@ public class JobCardServiceImpl implements JobCardService {
     public JobCardResponseDTO updateStatus(Long id, JobCardStatusUpdateRequestDTO request) {
         JobCard jobCard = jobCardRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("JobCard not Found!"));
+        if(jobCard.getStatus().equals(Status.COMPLETED)){
+            throw  new InvalidJobCardStateException("Cannot modify a job card that has already been completed");
+        }
+        if(jobCard.getStatus().equals(Status.CANCELLED)){
+            throw new InvalidJobCardStateException("Cannot modify a job card that has been cancelled");
+        }
         jobCard.setStatus(request.getStatus());
         JobCard updatedStatus = jobCardRepository.save(jobCard);
         return JobCardMapper.mapToDTO(updatedStatus);

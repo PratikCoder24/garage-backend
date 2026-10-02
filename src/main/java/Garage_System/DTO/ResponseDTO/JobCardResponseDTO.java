@@ -27,4 +27,6 @@ public class JobCardResponseDTO {
 
     private String vehicleNumber;
 
+    private String customerName;
+
 }
