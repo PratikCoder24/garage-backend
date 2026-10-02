@@ -10,6 +10,7 @@ public class JobCardPartsItemMapper {
                 jobCardPartsItem.getJobCard().getId(),
                 jobCardPartsItem.getParts().getId(),
                 jobCardPartsItem.getParts().getPartName(),
+                jobCardPartsItem.getQuantity(),
                 jobCardPartsItem.getParts().getPrice(),
                 jobCardPartsItem.getPriceUsed(),
                 jobCardPartsItem.getCreatedAt()

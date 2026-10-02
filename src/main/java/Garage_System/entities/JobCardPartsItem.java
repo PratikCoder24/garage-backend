@@ -30,6 +30,9 @@ public class JobCardPartsItem {
     @Column(name = "price_used",nullable = false)
     private double priceUsed;
 
+    @Column(name = "quantity",nullable= false,columnDefinition = "int default 1")
+    private  int quantity = 1;
+
     @Column(name = "created_at",nullable = false)
     private LocalDate createdAt;
 }

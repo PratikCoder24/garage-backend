@@ -19,4 +19,7 @@ public class AddPartsToJobCardRequestDTO {
 
     @PositiveOrZero(message = "Price must be positive")
     private Double priceUsed;
+
+    @Positive(message = "quantity must be positive")
+    private Integer quantity;
 }

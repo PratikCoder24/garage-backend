@@ -17,6 +17,7 @@ public class JobCardPartsItemResponseDTO {
     private Long jobCardId;
     private Long partId;
     private String partName;
+    private Integer quantity;
     private double price;
     private double priceUsed;
     @JsonFormat(pattern = "dd-MM-yyyy")

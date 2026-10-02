@@ -51,6 +51,7 @@ public class JobCardPartsItemServiceImpl implements JobCardPartsItemService {
         JobCardPartsItem items = new JobCardPartsItem();
         items.setJobCard(jobCard);
         items.setParts(parts);
+        items.setQuantity(request.getQuantity());
         items.setPriceUsed(request.getPriceUsed() != null ? request.getPriceUsed() : parts.getPrice());
         items.setCreatedAt(LocalDate.now());
 

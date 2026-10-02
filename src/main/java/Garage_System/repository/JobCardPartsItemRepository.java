@@ -12,6 +12,6 @@ import java.util.List;
 public interface JobCardPartsItemRepository extends JpaRepository<JobCardPartsItem,Long> {
     List<JobCardPartsItem> findByJobCardId(Long id);
 
-    @Query("Select COALESCE(SUM(j.priceUsed),0) from JobCardPartsItem j where j.jobCard.id = :jobCardId")
+    @Query("Select COALESCE(SUM(j.priceUsed * j.quantity),0) from JobCardPartsItem j where j.jobCard.id = :jobCardId")
     double sumPriceUsedByJobCardId(@Param("jobCardId") Long jobCardId);
 }
