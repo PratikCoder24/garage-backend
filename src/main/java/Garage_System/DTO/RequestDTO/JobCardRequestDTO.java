@@ -23,6 +23,5 @@ public class JobCardRequestDTO {
     @NotBlank(message = "condition of vehicle is required")
     private String condition;
 
-    @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate deliveryDate;
 }
