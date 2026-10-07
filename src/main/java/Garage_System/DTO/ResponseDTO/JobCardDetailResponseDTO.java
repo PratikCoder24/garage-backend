@@ -14,7 +14,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class JobCardDetailResponseDTO {
-    private  Long id;
+
+    private Long id;
 
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate createdAt;
@@ -28,9 +29,15 @@ public class JobCardDetailResponseDTO {
 
     private String vehicleNumber;
 
+    private String customerName;
+
     private List<JobCardServiceItemResponseDTO> services;
+
     private double estimate;
 
     private List<JobCardPartsItemResponseDTO> parts;
+
     private double partsTotal;
+
+    private double grandTotal;
 }
