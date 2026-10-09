@@ -23,4 +23,12 @@ public class InvoiceController {
         InvoiceResponseDTO response = invoiceService.generateInvoice(jobCardId);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+
+    @GetMapping("/job-card/{jobCardId}")
+    public ResponseEntity<InvoiceResponseDTO> getInvoiceByJobCardId(
+            @PathVariable Long jobCardId) {
+        return ResponseEntity.ok(
+                invoiceService.getInvoiceByJobCardId(jobCardId)
+        );
+    }
 }

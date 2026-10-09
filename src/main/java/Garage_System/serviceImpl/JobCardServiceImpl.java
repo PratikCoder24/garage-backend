@@ -44,7 +44,6 @@ public class JobCardServiceImpl implements JobCardService {
         Vehicles vehicle = vehicleRepository.findById(request.getVehicleId())
                 .orElseThrow(() -> new ResourceNotFoundException("Vehicle not Found!"));
         JobCard jobCard = new JobCard();
-        System.out.println("req dd" + request.getDeliveryDate());
         jobCard.setVehicle(vehicle);
         jobCard.setConditionNotes(request.getCondition());
         jobCard.setDeliveryDate(request.getDeliveryDate());
@@ -52,7 +51,6 @@ public class JobCardServiceImpl implements JobCardService {
         jobCard.setCreatedAt(LocalDate.now());
 
         JobCard savedJobCard = jobCardRepository.save(jobCard);
-        System.out.println("saved dd" + savedJobCard.getDeliveryDate());
         return JobCardMapper.mapToDTO(savedJobCard);
     }
 

@@ -70,4 +70,19 @@ public class InvoiceServiceImpl implements InvoiceService {
         List<JobCardPartsItem> parts = jobCardPartsItemRepository.findByJobCardId(jobCardId);
         return InvoiceMapper.mapToDTO(invoice,services,parts);
     }
+
+    @Override
+    public InvoiceResponseDTO getInvoiceByJobCardId(Long jobCardId) {
+        Invoice invoice = invoiceRepository.findByJobCardId(jobCardId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Invoice not found"));
+
+        List<JobCardServiceItem> services =
+                jobCardServiceItemRepository.findByJobCardId(jobCardId);
+
+        List<JobCardPartsItem> parts =
+                jobCardPartsItemRepository.findByJobCardId(jobCardId);
+
+        return InvoiceMapper.mapToDTO(invoice, services, parts);
+    }
 }

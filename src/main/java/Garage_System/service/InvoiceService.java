@@ -6,4 +6,6 @@ public interface InvoiceService {
     InvoiceResponseDTO generateInvoice(Long jobCardId);
 
     InvoiceResponseDTO getInvoice(Long invoiceId);
+
+    InvoiceResponseDTO getInvoiceByJobCardId(Long jobCardId);
 }
