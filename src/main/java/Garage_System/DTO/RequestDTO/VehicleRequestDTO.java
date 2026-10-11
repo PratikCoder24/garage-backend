@@ -24,13 +24,13 @@ public class VehicleRequestDTO {
     @NotBlank(message = "Vehicle number is required")
     private String vehicleNumber;
 
-    @NotBlank(message = "Chassis number is required")
+
     private String chassisNumber;
 
-    @NotBlank(message = "Engine number is required")
+
     private String engineNumber;
 
-    @NotNull(message = "Odometer is required")
+
     @PositiveOrZero(message = "Odometer must be positive")
     private Integer odometer;
 
