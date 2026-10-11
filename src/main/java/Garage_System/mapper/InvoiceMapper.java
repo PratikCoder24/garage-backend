@@ -26,6 +26,11 @@ public class InvoiceMapper {
         return new InvoiceResponseDTO(
                 invoice.getId(),
                 invoice.getJobCard().getId(),
+                invoice.getJobCard().getVehicle().getCustomer().getName(),
+                invoice.getJobCard().getVehicle().getCustomer().getPhone(),
+                invoice.getJobCard().getVehicle().getVehicleNumber(),
+                invoice.getJobCard().getVehicle().getCompany(),
+                invoice.getJobCard().getVehicle().getModel(),
                 serviceDTO,
                 invoice.getLabourCost(),
                 partsDTO,

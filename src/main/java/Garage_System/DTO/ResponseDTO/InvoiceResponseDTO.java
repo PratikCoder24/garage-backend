@@ -15,6 +15,11 @@ import java.util.List;
 public class InvoiceResponseDTO {
     private Long invoiceId;
     private Long jobCardId;
+    private String customerName;
+    private String customerPhone;
+    private String vehicleNumber;
+    private String vehicleCompany;
+    private String vehicleModel;
     private List<JobCardServiceItemResponseDTO> services;
     private Double labourCost;
     private List<JobCardPartsItemResponseDTO> parts;
