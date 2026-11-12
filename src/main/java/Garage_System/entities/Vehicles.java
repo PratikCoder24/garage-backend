@@ -1,5 +1,6 @@
 package Garage_System.entities;
 
+import Garage_System.Enum.VehicleType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -36,6 +37,10 @@ public class Vehicles {
 
     @Column(name = "odometer",nullable = false)
     private int odometer;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name="vehicle_type",nullable = false,length = 20)
+    private VehicleType vehicleType;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")

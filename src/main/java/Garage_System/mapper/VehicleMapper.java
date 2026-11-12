@@ -13,7 +13,8 @@ public class VehicleMapper {
                 vehicle.getVehicleNumber(),
                 vehicle.getChassisNumber(),
                 vehicle.getEngineNumber(),
-                vehicle.getOdometer()
+                vehicle.getOdometer(),
+                vehicle.getVehicleType().toString()
         );
     }
 }

@@ -52,6 +52,7 @@ public class VehicleServiceImpl implements VehicleService {
         vehicle.setChassisNumber(request.getChassisNumber());
         vehicle.setEngineNumber(request.getEngineNumber());
         vehicle.setOdometer(request.getOdometer());
+        vehicle.setVehicleType(request.getVehicleType());
 
         Vehicles savedVehicle = vehicleRepository.save(vehicle);
         return VehicleMapper.mapToDTO(savedVehicle);
@@ -78,6 +79,7 @@ public class VehicleServiceImpl implements VehicleService {
         vehicle.setChassisNumber(request.getChassisNumber());
         vehicle.setEngineNumber(request.getEngineNumber());
         vehicle.setOdometer(request.getOdometer());
+        vehicle.setVehicleType(request.getVehicleType());
 
         Vehicles updatedVehicle = vehicleRepository.save(vehicle);
         return VehicleMapper.mapToDTO(updatedVehicle);

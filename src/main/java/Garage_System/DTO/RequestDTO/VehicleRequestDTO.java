@@ -1,5 +1,6 @@
 package Garage_System.DTO.RequestDTO;
 
+import Garage_System.Enum.VehicleType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -33,6 +34,9 @@ public class VehicleRequestDTO {
 
     @PositiveOrZero(message = "Odometer must be positive")
     private Integer odometer;
+
+    @NotNull(message = "vehicle type is required")
+    private VehicleType vehicleType;
 
     @NotNull(message = "Customer Id is required")
     @Positive(message = "Id must be positive")

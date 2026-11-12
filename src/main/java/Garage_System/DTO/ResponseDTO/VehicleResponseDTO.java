@@ -18,4 +18,5 @@ public class VehicleResponseDTO {
     private String chassisNumber;
     private String engineNumber;
     private Integer odometer;
+    private String vehicleType;
 }
