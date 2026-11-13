@@ -41,5 +41,8 @@ public class JobCard {
     @OneToMany(mappedBy = "jobCard",fetch = FetchType.LAZY)
     private List<JobCardPartsItem> jobCardPartsItemsList;
 
+    @OneToOne(mappedBy = "jobCard")
+    private FuelReading fuelReading;
+
 }
 
