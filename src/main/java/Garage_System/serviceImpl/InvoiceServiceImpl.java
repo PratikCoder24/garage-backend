@@ -14,6 +14,7 @@ import Garage_System.repository.*;
 import Garage_System.service.InvoiceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -27,6 +28,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     private final JobCardRepository jobCardRepository;
 
     @Override
+    @Transactional
     public InvoiceResponseDTO generateInvoice(Long jobCardId) {
         JobCard jobCard = jobCardRepository.findById(jobCardId)
                 .orElseThrow(() -> new ResourceNotFoundException("JobCard not Found!"));
@@ -59,6 +61,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
+    @Transactional
     public InvoiceResponseDTO getInvoice(Long invoiceId) {
         Invoice invoice = invoiceRepository.findById(invoiceId)
                 .orElseThrow(() -> new ResourceNotFoundException("Invoice not found"));
@@ -69,6 +72,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
+    @Transactional
     public InvoiceResponseDTO getInvoiceByJobCardId(Long jobCardId) {
         Invoice invoice = invoiceRepository.findByJobCardId(jobCardId)
                 .orElseThrow(() ->

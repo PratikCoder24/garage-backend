@@ -12,6 +12,7 @@ import Garage_System.repository.VehicleRepository;
 import Garage_System.service.VehicleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,6 +25,7 @@ public class VehicleServiceImpl implements VehicleService {
 
 
     @Override
+    @Transactional
     public List<VehicleResponseDTO> getAllVehicles() {
         return vehicleRepository.findAll()
                 .stream()
@@ -32,6 +34,7 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
+    @Transactional
     public VehicleResponseDTO addVehicle(VehicleRequestDTO request) {
         Customer customer = customerRepository.findById(request.getCustomerId())
                 .orElseThrow(() -> new ResourceNotFoundException("Customer not Found"));
@@ -59,6 +62,7 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
+    @Transactional
     public VehicleResponseDTO updateVehicle(Long id, VehicleRequestDTO request) {
         Customer customer = customerRepository.findById(request.getCustomerId())
                 .orElseThrow(() -> new ResourceNotFoundException("Customer not Found"));
@@ -86,6 +90,7 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
+    @Transactional
     public VehicleResponseDTO searchVehicle(String vehicleNumber) {
 
         Vehicles vehicle = vehicleRepository.findByVehicleNumber(vehicleNumber)
@@ -96,6 +101,7 @@ public class VehicleServiceImpl implements VehicleService {
 
 
     @Override
+    @Transactional
     public void deleteVehicle(Long id) {
         vehicleRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Vehicle not Found!"));

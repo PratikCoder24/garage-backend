@@ -10,6 +10,8 @@ import Garage_System.repository.CustomerRepository;
 import Garage_System.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,6 +22,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 
     @Override
+    @Transactional
     public CustomerResponseDTO addCustomer(CustomerRequestDTO request) {
        Customer customer = new Customer();
 
@@ -32,6 +35,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    @Transactional
     public CustomerResponseDTO updateCustomer(Long id,CustomerRequestDTO request) {
         Customer customer = customerRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Customer not Found"));
@@ -45,6 +49,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    @Transactional
     public List<CustomerResponseDTO> getAllCustomers() {
         return customerRepository.findAll()
                 .stream()
@@ -53,12 +58,14 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    @Transactional
     public boolean getCustomerByPhone(String phone) {
         return customerRepository.existsByPhone(phone);
     }
 
 
     @Override
+    @Transactional
     public void deleteCustomer(Long id) {
         Customer customer =  customerRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not Found"));

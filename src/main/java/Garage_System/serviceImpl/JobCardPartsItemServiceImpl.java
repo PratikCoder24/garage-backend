@@ -16,6 +16,7 @@ import Garage_System.repository.PartsCatalogueRepository;
 import Garage_System.service.JobCardPartsItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -30,6 +31,7 @@ public class JobCardPartsItemServiceImpl implements JobCardPartsItemService {
 
 
     @Override
+    @Transactional
     public List<JobCardPartsItemResponseDTO> getPartsForJobCard(Long jobCardId) {
            jobCardRepository.findById(jobCardId)
                 .orElseThrow(() -> new ResourceNotFoundException("Job card not Found!"));
@@ -40,6 +42,7 @@ public class JobCardPartsItemServiceImpl implements JobCardPartsItemService {
     }
 
     @Override
+    @Transactional
     public JobCardPartsItemResponseDTO addPartsToJobCard(Long jobCardId, AddPartsToJobCardRequestDTO request) {
         JobCard jobCard = jobCardRepository.findById(jobCardId)
                 .orElseThrow(() -> new ResourceNotFoundException("Job card not Found"));
@@ -60,6 +63,7 @@ public class JobCardPartsItemServiceImpl implements JobCardPartsItemService {
     }
 
     @Override
+    @Transactional
     public JobCardPartsItemResponseDTO updatePriceUsed(Long itemId, UpdatePriceUsedRequestDTO request) {
         JobCardPartsItem items = jobCardPartsItemRepository.findById(itemId)
                 .orElseThrow(() -> new ResourceNotFoundException("Job card parts item not Found!"));
@@ -72,6 +76,7 @@ public class JobCardPartsItemServiceImpl implements JobCardPartsItemService {
     }
 
     @Override
+    @Transactional
     public void removePartsFromJobCard(Long itemId) {
         JobCardPartsItem item = jobCardPartsItemRepository.findById(itemId)
                 .orElseThrow(() -> new ResourceNotFoundException("Job card parts item not Found!"));
@@ -82,6 +87,7 @@ public class JobCardPartsItemServiceImpl implements JobCardPartsItemService {
     }
 
     @Override
+    @Transactional
     public double getPartsTotal(Long jobCardId) {
          jobCardRepository.findById(jobCardId)
                 .orElseThrow(() -> new ResourceNotFoundException("Job card not Found"));

@@ -16,6 +16,7 @@ import Garage_System.repository.ServiceCatalogueRepository;
 import Garage_System.service.JobCardServiceItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -30,6 +31,7 @@ public class JobCardServiceItemServiceImpl implements JobCardServiceItemService 
     private final InvoiceRepository invoiceRepository;
 
     @Override
+    @Transactional
     public List<JobCardServiceItemResponseDTO> getServiceForJobCard(Long jobCardId) {
         JobCard jobCard = jobCardRepository.findById(jobCardId)
                 .orElseThrow(() -> new ResourceNotFoundException("JobCard not Found!"));
@@ -40,6 +42,7 @@ public class JobCardServiceItemServiceImpl implements JobCardServiceItemService 
     }
 
     @Override
+    @Transactional
     public JobCardServiceItemResponseDTO addService(Long jobCardId,AddServiceToJobCardRequestDTO request) {
         JobCard jobCard = jobCardRepository.findById(jobCardId)
                 .orElseThrow(() -> new ResourceNotFoundException("JobCard not Found!"));
@@ -58,6 +61,7 @@ public class JobCardServiceItemServiceImpl implements JobCardServiceItemService 
     }
 
     @Override
+    @Transactional
     public JobCardServiceItemResponseDTO updateLabourFee(Long itemId, UpdateLabourFeeRequestDTO request) {
         JobCardServiceItem items = jobCardServiceItemRepository.findById(itemId)
                 .orElseThrow(() -> new ResourceNotFoundException("Job card service item not Found"));
@@ -70,6 +74,7 @@ public class JobCardServiceItemServiceImpl implements JobCardServiceItemService 
     }
 
     @Override
+    @Transactional
     public void removeService(Long itemId) {
         JobCardServiceItem item = jobCardServiceItemRepository.findById(itemId)
                 .orElseThrow(() -> new ResourceNotFoundException("Job card service item not Found"));
@@ -80,6 +85,7 @@ public class JobCardServiceItemServiceImpl implements JobCardServiceItemService 
     }
 
     @Override
+    @Transactional
     public double getEstimate(Long jobCardId) {
         jobCardRepository.findById(jobCardId)
                 .orElseThrow(() -> new ResourceNotFoundException("Job card not Found!"));

@@ -10,6 +10,7 @@ import Garage_System.repository.ServiceCatalogueRepository;
 import Garage_System.service.ServiceCatalogueService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,6 +21,7 @@ public class ServiceCatalogueImpl implements ServiceCatalogueService {
     private final ServiceCatalogueRepository repository;
 
     @Override
+    @Transactional
     public ServiceCatalogueResponseDTO addService(ServiceCatalogueRequestDTO request) {
         if(repository.existsByName(request.getServiceName())){
             throw new DuplicateResourceException("Service with this name already exists!");
@@ -35,6 +37,7 @@ public class ServiceCatalogueImpl implements ServiceCatalogueService {
     }
 
     @Override
+    @Transactional
     public List<ServiceCatalogueResponseDTO> getAllService() {
         return repository.findAll()
                 .stream()
@@ -43,6 +46,7 @@ public class ServiceCatalogueImpl implements ServiceCatalogueService {
     }
 
     @Override
+    @Transactional
     public ServiceCatalogueResponseDTO updateService(Long id, ServiceCatalogueRequestDTO request) {
         ServiceCatalogue service = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Service not Found!"));
@@ -59,6 +63,7 @@ public class ServiceCatalogueImpl implements ServiceCatalogueService {
     }
 
     @Override
+    @Transactional
     public void deleteService(Long id) {
         ServiceCatalogue service = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Service not Found"));

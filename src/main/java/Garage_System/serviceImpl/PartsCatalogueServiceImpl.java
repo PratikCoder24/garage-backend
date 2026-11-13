@@ -10,6 +10,7 @@ import Garage_System.repository.PartsCatalogueRepository;
 import Garage_System.service.PartsCatalogueService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,6 +21,7 @@ public class PartsCatalogueServiceImpl implements PartsCatalogueService {
     private final PartsCatalogueRepository partsCatalogueRepository;
 
     @Override
+    @Transactional
     public List<PartsCatalogueResponseDTO> getAllParts() {
         return partsCatalogueRepository.findAll()
                 .stream()
@@ -28,6 +30,7 @@ public class PartsCatalogueServiceImpl implements PartsCatalogueService {
     }
 
     @Override
+    @Transactional
     public PartsCatalogueResponseDTO addParts(PartsCatalogueRequestDTO request) {
         if(partsCatalogueRepository.existsByPartName(request.getPartsName())){
             throw new DuplicateResourceException("Part with this name already exists!");
@@ -41,6 +44,7 @@ public class PartsCatalogueServiceImpl implements PartsCatalogueService {
     }
 
     @Override
+    @Transactional
     public PartsCatalogueResponseDTO updateParts(Long id, PartsCatalogueRequestDTO request) {
         PartsCatalogue parts = partsCatalogueRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Part not Found!"));
@@ -55,6 +59,7 @@ public class PartsCatalogueServiceImpl implements PartsCatalogueService {
     }
 
     @Override
+    @Transactional
     public void deleteParts(Long id) {
         PartsCatalogue parts = partsCatalogueRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Part not Found!"));

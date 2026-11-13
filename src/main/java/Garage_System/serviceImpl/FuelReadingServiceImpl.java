@@ -47,6 +47,7 @@ public class FuelReadingServiceImpl implements FuelReadingService {
     }
 
     @Override
+    @Transactional
     public FuelReadingResponseDTO saveOutReading(Long jobCardId, FuelReadingDetailsRequestDTO request) {
         JobCard jobCard = jobCardRepository.findById(jobCardId)
                 .orElseThrow(() -> new ResourceNotFoundException("JobCard not found!"));

@@ -17,6 +17,7 @@ import Garage_System.repository.*;
 import Garage_System.service.JobCardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -32,6 +33,7 @@ public class JobCardServiceImpl implements JobCardService {
     private final InvoiceRepository invoiceRepository;
 
     @Override
+    @Transactional
     public List<JobCardResponseDTO> getAllJobCards() {
         return jobCardRepository.findAll()
                 .stream()
@@ -40,6 +42,7 @@ public class JobCardServiceImpl implements JobCardService {
     }
 
     @Override
+    @Transactional
     public JobCardResponseDTO createJobCard(JobCardRequestDTO request) {
         Vehicles vehicle = vehicleRepository.findById(request.getVehicleId())
                 .orElseThrow(() -> new ResourceNotFoundException("Vehicle not Found!"));
@@ -55,6 +58,7 @@ public class JobCardServiceImpl implements JobCardService {
     }
 
     @Override
+    @Transactional
     public JobCardResponseDTO updateJobCard(Long id, JobCardRequestDTO request) {
         JobCard jobCard = jobCardRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("JobCard not Found!"));
@@ -72,6 +76,7 @@ public class JobCardServiceImpl implements JobCardService {
     }
 
     @Override
+    @Transactional
     public JobCardDetailResponseDTO getJobCardById(Long id) {
         JobCard jobCard = jobCardRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("JobCard not Found!"));
@@ -85,6 +90,7 @@ public class JobCardServiceImpl implements JobCardService {
     }
 
     @Override
+    @Transactional
     public JobCardResponseDTO updateStatus(Long id, JobCardStatusUpdateRequestDTO request) {
         JobCard jobCard = jobCardRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("JobCard not Found!"));
