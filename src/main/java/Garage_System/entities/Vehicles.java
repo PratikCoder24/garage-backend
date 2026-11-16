@@ -29,14 +29,14 @@ public class Vehicles {
     @Column(name = "company",nullable = false)
     private String company;
 
-    @Column(name = "chassis_number",nullable = false,unique = true)
+    @Column(name = "chassis_number",unique = true)
     private String chassisNumber;
 
-    @Column(name = "engine_number",nullable = false)
+    @Column(name = "engine_number")
     private String engineNumber;
 
     @Column(name = "odometer",nullable = false)
-    private int odometer;
+    private Integer odometer;
 
     @Enumerated(EnumType.STRING)
     @Column(name="vehicle_type",nullable = false,length = 20)

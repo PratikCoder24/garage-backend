@@ -42,8 +42,10 @@ public class VehicleServiceImpl implements VehicleService {
             throw new DuplicateResourceException("Vehicle already exists!");
         }
 
-        if(vehicleRepository.existsByChassisNumber(request.getChassisNumber())){
-            throw new DuplicateResourceException("Vehicle already exists!");
+        if (request.getChassisNumber() != null
+                && !request.getChassisNumber().isBlank()
+                && vehicleRepository.existsByChassisNumber(request.getChassisNumber())) {
+            throw new DuplicateResourceException("Chassis number already exists!");
         }
 
         Vehicles vehicle = new Vehicles();
@@ -51,11 +53,12 @@ public class VehicleServiceImpl implements VehicleService {
         vehicle.setCustomer(customer);
         vehicle.setModel(request.getModel());
         vehicle.setCompany(request.getCompanyName());
+        vehicle.setVehicleType(request.getVehicleType());
         vehicle.setVehicleNumber(request.getVehicleNumber());
         vehicle.setChassisNumber(request.getChassisNumber());
         vehicle.setEngineNumber(request.getEngineNumber());
         vehicle.setOdometer(request.getOdometer());
-        vehicle.setVehicleType(request.getVehicleType());
+
 
         Vehicles savedVehicle = vehicleRepository.save(vehicle);
         return VehicleMapper.mapToDTO(savedVehicle);
@@ -72,18 +75,21 @@ public class VehicleServiceImpl implements VehicleService {
             throw new DuplicateResourceException("Vehicle already exists!");
         }
 
-        if(vehicleRepository.existsByChassisNumberAndIdNot(request.getChassisNumber(),id)){
-            throw  new DuplicateResourceException("Vehicle already exists!");
+        if (request.getChassisNumber() != null
+                && !request.getChassisNumber().isBlank()
+                && vehicleRepository.existsByChassisNumber(request.getChassisNumber())) {
+            throw new DuplicateResourceException("Chassis number already exists!");
         }
 
         vehicle.setModel(request.getModel());
         vehicle.setCustomer(customer);
         vehicle.setCompany(request.getCompanyName());
+        vehicle.setVehicleType(request.getVehicleType());
         vehicle.setVehicleNumber(request.getVehicleNumber());
         vehicle.setChassisNumber(request.getChassisNumber());
         vehicle.setEngineNumber(request.getEngineNumber());
         vehicle.setOdometer(request.getOdometer());
-        vehicle.setVehicleType(request.getVehicleType());
+
 
         Vehicles updatedVehicle = vehicleRepository.save(vehicle);
         return VehicleMapper.mapToDTO(updatedVehicle);

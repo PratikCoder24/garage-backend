@@ -10,11 +10,12 @@ public class VehicleMapper {
                 vehicle.getCustomer().getId(),
                 vehicle.getModel(),
                 vehicle.getCompany(),
+                vehicle.getVehicleType().toString(),
                 vehicle.getVehicleNumber(),
                 vehicle.getChassisNumber(),
                 vehicle.getEngineNumber(),
-                vehicle.getOdometer(),
-                vehicle.getVehicleType().toString()
+                vehicle.getOdometer()
+
         );
     }
 }

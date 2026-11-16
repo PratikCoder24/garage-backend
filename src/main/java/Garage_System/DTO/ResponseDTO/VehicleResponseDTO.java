@@ -14,9 +14,10 @@ public class VehicleResponseDTO {
     private Long customerId;
     private String model;
     private String companyName;
+    private String vehicleType;
     private String vehicleNumber;
     private String chassisNumber;
     private String engineNumber;
     private Integer odometer;
-    private String vehicleType;
+
 }

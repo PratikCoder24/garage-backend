@@ -22,6 +22,9 @@ public class VehicleRequestDTO {
     @NotBlank(message = "Company name is required")
     private String companyName;
 
+    @NotNull(message = "vehicle type is required")
+    private VehicleType vehicleType;
+
     @NotBlank(message = "Vehicle number is required")
     private String vehicleNumber;
 
@@ -35,8 +38,7 @@ public class VehicleRequestDTO {
     @PositiveOrZero(message = "Odometer must be positive")
     private Integer odometer;
 
-    @NotNull(message = "vehicle type is required")
-    private VehicleType vehicleType;
+
 
     @NotNull(message = "Customer Id is required")
     @Positive(message = "Id must be positive")
