@@ -8,7 +8,5 @@ public interface FuelReadingService {
 
     FuelReadingResponseDTO saveInReading(Long jobCardId, FuelReadingDetailsRequestDTO request);
 
-    FuelReadingResponseDTO saveOutReading(Long jobCardId, FuelReadingDetailsRequestDTO request);
-
     FuelReadingResponseDTO getFuelReadingByJobCardId(Long jobCardId);
 }

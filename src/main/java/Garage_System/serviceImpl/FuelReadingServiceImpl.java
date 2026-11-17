@@ -47,27 +47,6 @@ public class FuelReadingServiceImpl implements FuelReadingService {
     }
 
     @Override
-    @Transactional
-    public FuelReadingResponseDTO saveOutReading(Long jobCardId, FuelReadingDetailsRequestDTO request) {
-        JobCard jobCard = jobCardRepository.findById(jobCardId)
-                .orElseThrow(() -> new ResourceNotFoundException("JobCard not found!"));
-        if(jobCard.getStatus() != Status.IN_PROGRESS) {
-            throw new InvalidJobCardStateException("OUT reading can only be saved while job card is IN_PROGRESS");
-        }
-        FuelReading fuelReading = fuelReadingRepository.findByJobCardId(jobCardId)
-                .orElseThrow(() -> new ResourceNotFoundException("IN fuel reading must be recorded first"));
-
-        if(fuelReading.getOutReading() != null){
-            throw new DuplicateResourceException("Out Fuel reading already exists!");
-        }
-
-        fuelReading.setOutReading(FuelReadingMapper.mapToEntity(request));
-
-        FuelReading savedReading = fuelReadingRepository.save(fuelReading);
-        return FuelReadingMapper.mapToDTO(savedReading);
-    }
-
-    @Override
     @Transactional(readOnly = true)
     public FuelReadingResponseDTO getFuelReadingByJobCardId(Long jobCardId) {
         FuelReading fuelReading = fuelReadingRepository

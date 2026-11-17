@@ -47,31 +47,4 @@ public class FuelReading {
 
     )
     private FuelReadingDetails inReading;
-
-    @Embedded
-    @AttributeOverrides(value = {
-            @AttributeOverride(
-                    name = "readingMode",
-                    column = @Column(name = "out_reading_mode", length = 25)
-            ),
-            @AttributeOverride(
-                    name = "fuelLevel",
-                    column = @Column(name = "out_fuel_level", precision = 5,scale = 2)
-            ),
-            @AttributeOverride(
-                    name = "meterStatus",
-                    column = @Column(name = "out_meter_status", length = 25)
-            ),
-            @AttributeOverride(
-                    name = "reserveStatus",
-                    column = @Column(name = "out_reserve_status", length = 25)
-            ),
-            @AttributeOverride(
-                    name = "recordedAt",
-                    column = @Column(name = "out_recorded_at")
-            )
-    }
-
-    )
-    private FuelReadingDetails outReading;
 }

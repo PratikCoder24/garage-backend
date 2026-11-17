@@ -29,13 +29,4 @@ public class FuelReadingController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @PostMapping("/{jobCardId}/out")
-    public ResponseEntity<FuelReadingResponseDTO> saveOutReading(
-            @PathVariable Long jobCardId,
-            @Valid @RequestBody FuelReadingDetailsRequestDTO request
-    ){
-        FuelReadingResponseDTO response =  fuelReadingService.saveOutReading(jobCardId, request);
-        return ResponseEntity.ok(response);
-    }
-
 }

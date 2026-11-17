@@ -14,8 +14,7 @@ public class FuelReadingMapper {
         return new FuelReadingResponseDTO(
                 fuelReading.getId(),
                 fuelReading.getJobCard().getId(),
-                mapDetailsToDTO(fuelReading.getInReading()),
-                mapDetailsToDTO(fuelReading.getOutReading())
+                mapDetailsToDTO(fuelReading.getInReading())
         );
     }
 

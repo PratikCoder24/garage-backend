@@ -14,5 +14,4 @@ public class FuelReadingResponseDTO {
     private Long jobCardId;
 
     private FuelReadingDetailsResponseDTO inReading;
-    private FuelReadingDetailsResponseDTO outReading;
 }
