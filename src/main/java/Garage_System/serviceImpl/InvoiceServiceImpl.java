@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -85,5 +86,25 @@ public class InvoiceServiceImpl implements InvoiceService {
                 jobCardPartsItemRepository.findByJobCardId(jobCardId);
 
         return InvoiceMapper.mapToDTO(invoice, services, parts);
+    }
+
+    @Override
+    @Transactional
+    public List<InvoiceResponseDTO> getAllInvoice() {
+        return invoiceRepository.findAll()
+                .stream()
+                .map(invoice -> {
+                    Long jobCardId = invoice.getJobCard().getId();
+
+                    List<JobCardServiceItem> services =
+                            jobCardServiceItemRepository.findByJobCardId(jobCardId);
+
+                    List<JobCardPartsItem> parts =
+                            jobCardPartsItemRepository.findByJobCardId(jobCardId);
+
+                    return InvoiceMapper.mapToDTO(invoice, services, parts);
+                })
+                .collect(Collectors.toList());
+
     }
 }
